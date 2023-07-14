@@ -1,0 +1,91 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from "@storybook/addon-docs";
+import Button from "./Button";
+
+<Meta title="components/atoms/Button" component={Button} />
+
+export const Template = (args) => (
+  <Button {...args}>{args.children || "버튼"}</Button>
+);
+
+# Button
+
+<p>Button 컴포넌트입니다.</p>
+
+<Canvas>
+  <Story name="Default">{Template.bind()}</Story>
+</Canvas>
+
+<ArgsTable story="Default" />
+
+# Color
+
+<Canvas>
+  <Story name="Color">
+    <div>
+      <Button>default</Button>
+      <Button disabled>disabled</Button>
+      <br />
+      <br />
+      <Button theme="primary">primary</Button>
+      <Button theme="primary" disabled>
+        primary disabled
+      </Button>
+      <br />
+      <br />
+      <Button theme="secondary">secondary</Button>
+      <Button theme="secondary" disabled>
+        secondary disabled
+      </Button>
+      <br />
+      <br />
+      <Button theme="red">red</Button>
+      <Button theme="red" disabled>
+        red disabled
+      </Button>
+      <br />
+      <br />
+      <Button theme="dark">dark</Button>
+      <Button theme="dark" disabled>
+        dark disabled
+      </Button>
+      <br />
+      <br />
+    </div>
+  </Story>
+</Canvas>
+
+# Size
+
+<Canvas>
+  <Story name="Size">
+    <div>
+      <Button size="small">Small</Button>
+      <Button size="small" disabled>
+        Small disabled
+      </Button>
+      <br />
+      <br />
+      <Button>Medium</Button>
+      <Button disabled>Medium</Button>
+      <br />
+      <br />
+      <Button size="large">Large</Button>
+      <Button size="large" disabled>
+        Large
+      </Button>
+      <br />
+    </div>
+  </Story>
+</Canvas>
+
+# Shape
+
+<Canvas>
+  <Story name="Shape">
+    <div>
+      <Button shape="default">default</Button>
+      <Button shape="rounded">rounded</Button>
+      <Button shape="pill">pill</Button>
+    </div>
+  </Story>
+</Canvas>
