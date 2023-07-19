@@ -1,0 +1,32 @@
+import { Meta, Story, Canvas, ArgsTable, Source } from "@storybook/addon-docs";
+import Input from "./Input";
+
+<Meta title="components/atoms/Input" component={Input} />
+
+export const Template = (args) => <Input {...args}></Input>;
+
+# Button
+
+<p>Button 컴포넌트입니다.</p>
+
+<Canvas>
+  <Story name="Default" args={{ placeholder: "placeholder" }}>
+    {Template.bind()}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Default" />
+
+# Example
+
+<Canvas>
+  <Story name="Example">
+    <Input placeholder="placeholder"></Input>
+    <br />
+    <Input placeholder="placeholder" initValue="initValue"></Input>
+    <br />
+    <Input placeholder="disabled" disabled></Input>
+    <br />
+    <Input placeholder="error" error="error"></Input>
+  </Story>
+</Canvas>
