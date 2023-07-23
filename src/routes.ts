@@ -1,5 +1,6 @@
 const ROUTES = {
-  LOGIN: "/",
+  MAIN: "/",
+  LOGIN: "/login",
   AGREE: "/join/agree",
   JOIN: "/join",
 };

@@ -6,7 +6,7 @@ import IconButton from "../Button/IconButton";
 export const InputErrorMessageDiv = styled.div`
   color: ${COLORS["error"]};
   margin-left: 12px;
-  line-height: 2;
+  line-height: 1.5;
   font-size: 14px;
 `;
 

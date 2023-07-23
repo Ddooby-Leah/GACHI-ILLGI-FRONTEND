@@ -5,12 +5,17 @@ import { useState } from "react";
 import Icon from "@/components/atom/Icon/Icon";
 import InputWithIcon from "@/components/atom/Input/InputWithIcon";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "@/api/auth";
 
 function Login() {
   const [id, setId] = useState<string>("");
-  const [, setPassword] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
+
+  const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+  const LINK = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -20,11 +25,32 @@ function Login() {
     setPassword(e.target.value);
   };
 
-  const handleLoginClick = () => {};
+  const handleLoginClick = () => {
+    login();
+  };
+
+  const handleKakaoLoginClick = () => {
+    window.location.href = LINK;
+  };
 
   const handleJoinClick = () => {
     navigate("/join/agree");
   };
+
+  async function login() {
+    const user = {
+      email: id,
+      password: password,
+      kakaoUser: false,
+    };
+
+    try {
+      const response = await axiosInstance.post("/api/auth/login", user);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <S.Container>
@@ -60,7 +86,12 @@ function Login() {
           </Button>
         </S.ButtonWrapper>
         <S.ButtonWrapper>
-          <Button theme="kakao" width="400px" height="50px">
+          <Button
+            theme="kakao"
+            width="400px"
+            height="50px"
+            onClick={handleKakaoLoginClick}
+          >
             카카오 로그인 / 회원가입
           </Button>
         </S.ButtonWrapper>

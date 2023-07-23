@@ -4,6 +4,7 @@ import { useState } from "react";
 import Icon from "@/components/atom/Icon/Icon";
 import Input from "@/components/atom/Input/Input";
 import Button from "@/components/atom/Button/Button";
+import axiosInstance from "@/api/auth";
 
 function Join() {
   const [id, setId] = useState<string>("");
@@ -13,10 +14,26 @@ function Join() {
   const [birthday, setBirthday] = useState<string>("");
   const [gender, setGender] = useState<string>("");
 
-  const [passwordError, setPasswordError] = useState<boolean | string>(false);
+  /* 회원가입 활성화 */
+  const [idError, setIdError] = useState<boolean | string>(false);
+  const [passwordError] = useState<boolean | string>(false);
+  const [passwordCheckError, setPasswordCheckError] = useState<
+    boolean | string
+  >(false);
+  const [nicknameError] = useState<boolean | string>(false);
+  const [birthdayError, setBirthdayError] = useState<boolean | string>(false);
+  const [genderError, setGenderError] = useState<boolean | string>(false);
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
+
+    const regExp =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    if (!regExp.test(e.target.value)) {
+      setIdError("이메일 형식으로 입력해주세요.");
+    } else {
+      setIdError(false);
+    }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +46,9 @@ function Join() {
     setPasswordCheck(e.target.value);
 
     if (password !== e.target.value) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
+      setPasswordCheckError("비밀번호가 일치하지 않습니다.");
     } else {
-      setPasswordError(false);
+      setPasswordCheckError(false);
     }
   };
 
@@ -41,15 +58,61 @@ function Join() {
 
   const handleBirthdayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBirthday(e.target.value);
+
+    const regExp = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+    if (!regExp.test(e.target.value)) {
+      setBirthdayError("YYYY-MM-DD 으로 입력해주세요.");
+    } else {
+      setBirthdayError(false);
+    }
   };
 
   const handleGenderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGender(e.target.value);
+
+    if (!(e.target.value === "여자" || e.target.value === "남자")) {
+      setGenderError("여자/남자 중 입력해주세요.");
+    } else {
+      setGenderError(false);
+    }
   };
 
   const handleJoinClick = () => {
-    alert(password);
+    signUp();
   };
+
+  async function signUp() {
+    const user = {
+      email: id,
+      password: password,
+      nickname: nickname,
+      sex: gender,
+      birthday: birthday,
+      profileImageUrl: "",
+      isOAuthUser: false,
+    };
+
+    console.log(user);
+
+    const sendEmail = {
+      nickname: nickname,
+      email: id,
+    };
+
+    try {
+      const response = await axiosInstance.post("/api/auth/signup", user);
+      console.log(response.data.code);
+      if (response.data.code === "1") {
+        const response2 = await axiosInstance.post(
+          "/api/auth/send-mail",
+          sendEmail
+        );
+        console.log(response2);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <L.Container>
@@ -60,15 +123,17 @@ function Join() {
         <L.InputContainer>
           <Input
             title="아이디"
-            placeholder="아이디를 입력해주세요."
+            placeholder="아이디를 입력해주세요. (이메일)"
             value={id}
             onChange={handleIdChange}
+            error={idError}
           ></Input>
 
           <InputWithIcon
             title="비밀번호"
             value={password}
             onChange={handlePasswordChange}
+            error={passwordError}
           ></InputWithIcon>
 
           <InputWithIcon
@@ -76,7 +141,7 @@ function Join() {
             placeholder="비밀번호를 다시 한번 입력해주세요."
             value={passwordCheck}
             onChange={handlePasswordCheckChange}
-            error={passwordError}
+            error={passwordCheckError}
           ></InputWithIcon>
 
           <Input
@@ -84,15 +149,17 @@ function Join() {
             placeholder="닉네임을 입력해주세요."
             value={nickname}
             onChange={handleNicknameChange}
+            error={nicknameError}
           ></Input>
 
           <L.HalfInputContainer>
             <L.HalfInputWrapper>
               <Input
                 title="생일"
-                placeholder="YYYY/MM/DD"
+                placeholder="YYYY-MM-DD"
                 value={birthday}
                 onChange={handleBirthdayChange}
+                error={birthdayError}
               ></Input>
             </L.HalfInputWrapper>
 
@@ -102,6 +169,7 @@ function Join() {
                 placeholder="여자 / 남자"
                 value={gender}
                 onChange={handleGenderChange}
+                error={genderError}
               ></Input>
             </L.HalfInputWrapper>
           </L.HalfInputContainer>
@@ -112,6 +180,14 @@ function Join() {
             width="400px"
             height="50px"
             onClick={handleJoinClick}
+            disabled={
+              !!idError ||
+              !!passwordError ||
+              !!passwordCheckError ||
+              !!nicknameError ||
+              !!birthdayError ||
+              !!genderError
+            }
           >
             회원가입
           </Button>

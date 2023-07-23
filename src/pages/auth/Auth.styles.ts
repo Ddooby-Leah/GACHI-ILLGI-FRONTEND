@@ -48,7 +48,6 @@ const InputWrapper = styled.div`
 const HalfInputContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 `;
 
 const HalfInputWrapper = styled.div`
@@ -56,9 +55,8 @@ const HalfInputWrapper = styled.div`
   flex-direction: column;
 
   width: 48%;
-  height: 50px;
 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const Text = styled.div`
