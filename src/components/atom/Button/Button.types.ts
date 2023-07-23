@@ -1,7 +1,9 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode, ComponentProps } from "react";
 import type { KeyOfColors } from "@/styles/colors";
 import { KeyOfSizes } from "@/styles/sizes";
 import { KeyOfShapes } from "@/styles/shapes";
+import Icon from "../Icon/Icon";
+import Button from "./Button";
 
 type ButtonStyleProps = {
   color: KeyOfColors;
@@ -9,7 +11,14 @@ type ButtonStyleProps = {
   hoverColor: KeyOfColors;
 };
 
-type ButtonThemeNames = "default" | "primary" | "secondary" | "red" | "dark";
+type ButtonThemeNames =
+  | "default"
+  | "primary"
+  | "secondary"
+  | "red"
+  | "dark"
+  | "kakao"
+  | "none";
 type ButtonThemeProps = Record<ButtonThemeNames | string, ButtonStyleProps>;
 
 export const BUTTON_THEME: ButtonThemeProps = {
@@ -38,6 +47,16 @@ export const BUTTON_THEME: ButtonThemeProps = {
     backgroundColor: "dark",
     hoverColor: "dark_hover",
   },
+  kakao: {
+    color: "black085",
+    backgroundColor: "kakao",
+    hoverColor: "kakao",
+  },
+  none: {
+    color: "none",
+    backgroundColor: "none",
+    hoverColor: "none",
+  },
 };
 
 export interface ButtonProps
@@ -45,8 +64,8 @@ export interface ButtonProps
   children?: ReactNode;
 
   /** 스타일 타입 */
-  // width?: string;
-  // height?: string;
+  width?: string;
+  height?: string;
   theme?: ButtonThemeNames;
   shape?: KeyOfShapes;
   size?: KeyOfSizes;
@@ -56,3 +75,6 @@ export interface ButtonProps
   onClick?: () => void;
   onMouseDown?: () => void;
 }
+
+export type IconButtonProps = ComponentProps<typeof Icon> &
+  ComponentProps<typeof Button>;

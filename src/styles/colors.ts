@@ -6,7 +6,10 @@ export const COLORS = {
   lightgray: "#f8f9fb",
   dark: "#44444414",
   black: "#000",
+  black085: "#000000d9",
   red: "#E76055",
+  kakao: "#FEE500",
+  none: "transparent",
 
   /* status */
   error: "#fa1e0e",

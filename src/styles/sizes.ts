@@ -16,6 +16,7 @@ export const SIZES = {
     font-size: 16px;
     line-height: 24px;
   `,
+  none: css``,
 };
 
 export type KeyOfSizes = keyof typeof SIZES;

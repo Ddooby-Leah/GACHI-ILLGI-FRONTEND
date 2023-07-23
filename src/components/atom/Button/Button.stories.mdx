@@ -1,5 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from "@storybook/addon-docs";
 import Button from "./Button";
+import IconButton from "./IconButton";
 
 <Meta title="components/atoms/Button" component={Button} />
 
@@ -88,4 +89,13 @@ export const Template = (args) => (
       <Button shape="pill">pill</Button>
     </div>
   </Story>
+</Canvas>
+
+# IconButton
+
+<Canvas>
+  <div>
+    <IconButton name="SHOW_PASSWORD" width="40px" height="40px"></IconButton>
+    <IconButton name="HIDE_PASSWORD" width="40px" height="40px"></IconButton>
+  </div>
 </Canvas>

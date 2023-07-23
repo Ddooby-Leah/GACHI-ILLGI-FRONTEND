@@ -3,6 +3,8 @@ import { ButtonProps } from "./Button.types";
 
 const Button = ({
   children,
+  width,
+  height,
   theme = "default",
   shape = "rounded",
   size = "medium",
@@ -11,6 +13,8 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <S.StyledButton
+      width={width}
+      height={height}
       theme={theme}
       shape={shape}
       size={size}

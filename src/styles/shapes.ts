@@ -10,6 +10,10 @@ export const SHAPES = {
   pill: css`
     border-radius: 5rem;
   `,
+  none: css`
+    border-radius: 0;
+    border: none;
+  `,
 };
 
 export type KeyOfShapes = keyof typeof SHAPES;

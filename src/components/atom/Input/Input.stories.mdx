@@ -1,5 +1,6 @@
 import { Meta, Story, Canvas, ArgsTable, Source } from "@storybook/addon-docs";
 import Input from "./Input";
+import InputWithIcon from "./InputWithIcon";
 
 <Meta title="components/atoms/Input" component={Input} />
 
@@ -28,5 +29,6 @@ export const Template = (args) => <Input {...args}></Input>;
     <Input placeholder="disabled" disabled></Input>
     <br />
     <Input placeholder="error" error="error"></Input>
+    <br />
   </Story>
 </Canvas>

@@ -2,6 +2,7 @@ import * as S from "./Input.styles";
 import { InputProps } from "./Input.types";
 
 const Input = ({
+  title,
   type = "text",
   placeholder = "",
   error = false,
@@ -11,6 +12,7 @@ const Input = ({
 }: InputProps) => {
   return (
     <>
+      {title && <S.InputTitle>{title}</S.InputTitle>}
       <S.StyledInput
         defaultValue={initValue}
         type={type}
