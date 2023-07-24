@@ -5,8 +5,11 @@ import Icon from "@/components/atom/Icon/Icon";
 import Input from "@/components/atom/Input/Input";
 import Button from "@/components/atom/Button/Button";
 import axiosInstance from "@/api/auth";
+import { useNavigate } from "react-router-dom";
 
 function Join() {
+  const navigate = useNavigate();
+
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordCheck, setPasswordCheck] = useState<string>("");
@@ -92,8 +95,6 @@ function Join() {
       isOAuthUser: false,
     };
 
-    console.log(user);
-
     const sendEmail = {
       nickname: nickname,
       email: id,
@@ -101,13 +102,15 @@ function Join() {
 
     try {
       const response = await axiosInstance.post("/api/auth/signup", user);
-      console.log(response.data.code);
       if (response.data.code === "1") {
         const response2 = await axiosInstance.post(
           "/api/auth/send-mail",
           sendEmail
         );
-        console.log(response2);
+
+        if (response2.data.code === "1") {
+          navigate("/login");
+        }
       }
     } catch (error) {
       console.log(error);

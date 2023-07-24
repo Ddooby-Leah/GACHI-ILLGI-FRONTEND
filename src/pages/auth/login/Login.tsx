@@ -47,6 +47,16 @@ function Login() {
     try {
       const response = await axiosInstance.post("/api/auth/login", user);
       console.log(response);
+      if (response.data.code === "1") {
+        navigate("/");
+      } else {
+        /* TODO: Alert 컴포넌트화 */
+        const title = response.data.shortMessage;
+        const message = response.data.longMessage;
+
+        alert(title);
+        alert(message);
+      }
     } catch (error) {
       console.log(error);
     }

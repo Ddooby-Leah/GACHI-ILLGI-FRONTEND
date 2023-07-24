@@ -3,6 +3,7 @@ import Axios from "axios";
 const axiosInstance = Axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   timeout: 5000,
+  headers: { "Content-Type": "application/json" },
 });
 
 axiosInstance.interceptors.request.use(
