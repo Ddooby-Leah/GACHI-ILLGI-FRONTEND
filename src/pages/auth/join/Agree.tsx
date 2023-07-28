@@ -2,15 +2,23 @@ import Icon from "@/components/atom/Icon/Icon";
 import * as S from "../Auth.styles";
 import Button from "@/components/atom/Button/Button";
 import IconButton from "@/components/atom/Button/IconButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { KeyOfSVGS } from "@/assets";
 import { useNavigate } from "react-router-dom";
 
 function Agree() {
+  const [email, setEmail] = useState<string>("");
   const [termIcon, setTermIcon] = useState<KeyOfSVGS>("CHECKED_NOT");
   const [privacyIcon, setPrivacyIcon] = useState<KeyOfSVGS>("CHECKED_NOT");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = new URL(document.location.toString()).searchParams.get(
+      "email"
+    );
+    setEmail(user ?? "");
+  }, []);
 
   const handleTermOfUseIconClick = () => {
     termIcon === "CHECKED_NOT"
@@ -29,7 +37,7 @@ function Agree() {
   };
 
   const handleConfirmClick = () => {
-    navigate("/join");
+    navigate("/join", { state: email });
   };
 
   return (

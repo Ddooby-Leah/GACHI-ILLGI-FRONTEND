@@ -18,6 +18,7 @@ export interface InputWithIconProps {
   height?: number;
   title?: string;
   value?: string;
+  disabled?: boolean;
   placeholder?: string;
   error?: boolean | string | null;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

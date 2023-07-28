@@ -8,6 +8,7 @@ const InputWithIcon = ({
   value,
   title,
   error,
+  disabled = false,
   placeholder = "비밀번호를 입력해주세요.",
   onChange,
 }: InputWithIconProps) => {
@@ -41,6 +42,7 @@ const InputWithIcon = ({
           placeholder={placeholder}
           value={value}
           type={passwordType}
+          disabled={disabled}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={onChange}

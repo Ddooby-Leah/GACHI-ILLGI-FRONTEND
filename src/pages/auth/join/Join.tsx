@@ -1,14 +1,15 @@
 import InputWithIcon from "@/components/atom/Input/InputWithIcon";
 import * as L from "../Auth.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@/components/atom/Icon/Icon";
 import Input from "@/components/atom/Input/Input";
 import Button from "@/components/atom/Button/Button";
 import axiosInstance from "@/api/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Join() {
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -81,8 +82,34 @@ function Join() {
   };
 
   const handleJoinClick = () => {
-    signUp();
+    if (state !== null) {
+      kakaoSignUp();
+    } else {
+      signUp();
+    }
   };
+
+  async function kakaoSignUp() {
+    const user = {
+      email: state,
+      password: "kakao",
+      nickname: nickname,
+      sex: gender,
+      birthday: birthday,
+      profileImageUrl: "",
+      isOAuthUser: true,
+    };
+
+    try {
+      const response = await axiosInstance.post("/api/auth/signup", user);
+      console.log(response);
+      if (response.data.code === "1") {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function signUp() {
     const user = {
@@ -127,9 +154,10 @@ function Join() {
           <Input
             title="아이디"
             placeholder="아이디를 입력해주세요. (이메일)"
-            value={id}
+            initValue={id}
             onChange={handleIdChange}
             error={idError}
+            disabled={state !== null}
           ></Input>
 
           <InputWithIcon
@@ -137,6 +165,7 @@ function Join() {
             value={password}
             onChange={handlePasswordChange}
             error={passwordError}
+            disabled={state !== null}
           ></InputWithIcon>
 
           <InputWithIcon
@@ -145,6 +174,7 @@ function Join() {
             value={passwordCheck}
             onChange={handlePasswordCheckChange}
             error={passwordCheckError}
+            disabled={state !== null}
           ></InputWithIcon>
 
           <Input
