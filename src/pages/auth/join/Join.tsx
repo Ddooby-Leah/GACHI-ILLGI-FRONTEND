@@ -28,6 +28,12 @@ function Join() {
   const [birthdayError, setBirthdayError] = useState<boolean | string>(false);
   const [genderError, setGenderError] = useState<boolean | string>(false);
 
+  useEffect(() => {
+    if (state !== null) {
+      setId(state);
+    }
+  }, []);
+
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
 
@@ -92,16 +98,16 @@ function Join() {
   async function kakaoSignUp() {
     const user = {
       email: state,
-      password: "kakao",
       nickname: nickname,
       sex: gender,
       birthday: birthday,
-      profileImageUrl: "",
-      isOAuthUser: true,
     };
 
     try {
-      const response = await axiosInstance.post("/api/auth/signup", user);
+      const response = await axiosInstance.post(
+        "/api/auth/signup/add-detail",
+        user
+      );
       console.log(response);
       if (response.data.code === "1") {
         navigate("/login");
