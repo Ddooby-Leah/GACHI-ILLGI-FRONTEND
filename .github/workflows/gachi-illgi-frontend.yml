@@ -35,6 +35,9 @@ jobs:
       # 소스코드 체크아웃
       - name: Checkout source code
         uses: actions/checkout@v2
+      - run: |
+          echo "VITE_REST_API_KEY=${{secrets.REST_API_KEY}}" >> .env
+          echo "VITE_REDIRECT_URI=${{secrets.REDIRECT_URI}}" >> .env
 
       - name: Set up Node.js
         uses: actions/setup-node@v3

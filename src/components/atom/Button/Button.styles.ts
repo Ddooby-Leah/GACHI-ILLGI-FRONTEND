@@ -7,7 +7,7 @@ import { KeyOfShapes, SHAPES } from "@/styles/shapes";
 import { KeyOfSizes, SIZES } from "@/styles/sizes";
 
 export const StyledButton = styled("button")<ButtonProps>`
-  ${({ theme, shape, size }) => {
+  ${({ width, height, theme, shape, size }) => {
     const COLOR: KeyOfColors =
       BUTTON_THEME[theme].color ?? BUTTON_THEME["default"].color;
     const BACKGROUND_COLOR: KeyOfColors =
@@ -18,11 +18,17 @@ export const StyledButton = styled("button")<ButtonProps>`
     const BORDER: KeyOfBorders = theme !== "default" ? "else" : "default";
     const SHAPE: KeyOfShapes = shape ?? "rounded";
     const SIZE: KeyOfSizes = size ?? "small";
+    const WIDTH: string = width ?? "";
+    const HEIGHT: string = height ?? "";
 
     return css`
+      width: ${WIDTH};
+      height: ${HEIGHT};
+
       color: ${COLORS[COLOR]};
       background-color: ${COLORS[BACKGROUND_COLOR]};
-      margin-right: 10px;
+
+      cursor: pointer;
 
       ${BORDERS[BORDER]}
       ${SHAPES[SHAPE]}
